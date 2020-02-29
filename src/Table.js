@@ -133,13 +133,15 @@ export default class Table extends Component {
           >
             Id
           </div>
-          <div
-            onClick={() => {
-              this.sortBy("name");
-            }}
-            className="header-item"
-          >
-            Nazwa klienta
+          <div className="header-item">
+            <div
+              className="header-item__block"
+              onClick={() => {
+                this.sortBy("name");
+              }}
+            >
+              Nazwa klienta
+            </div>
             <input
               className="input"
               type="text"
@@ -148,13 +150,15 @@ export default class Table extends Component {
               onChange={this.setTermName}
             />
           </div>
-          <div
-            className="header-item"
-            onClick={() => {
-              this.sortBy("address");
-            }}
-          >
-            Adres
+          <div className="header-item">
+            <div
+              className="header-item__block"
+              onClick={() => {
+                this.sortBy("address");
+              }}
+            >
+              Adres
+            </div>
             <input
               className="input"
               type="text"

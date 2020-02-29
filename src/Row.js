@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 function Row({ rowData, applyChangeName, applyChangeAdres }) {
+  console.log(rowData);
   const [isEditingName, setEditingName] = useState(false);
   const [isEditingAdres, setEditingAdres] = useState(false);
 
@@ -58,3 +60,15 @@ function Row({ rowData, applyChangeName, applyChangeAdres }) {
 }
 
 export default Row;
+
+Row.propTypes = {
+  rowData: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      address: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  applyChangeName: PropTypes.func.isRequired,
+  applyChangeAdres: PropTypes.func.isRequired
+};
