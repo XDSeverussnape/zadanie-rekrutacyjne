@@ -62,13 +62,11 @@ function Row({ rowData, applyChangeName, applyChangeAdres }) {
 export default Row;
 
 Row.propTypes = {
-  rowData: PropTypes.objectOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      address: PropTypes.string.isRequired
-    })
-  ).isRequired,
+  rowData: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired
+  }).isRequired,
   applyChangeName: PropTypes.func.isRequired,
   applyChangeAdres: PropTypes.func.isRequired
 };
