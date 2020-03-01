@@ -24,6 +24,8 @@ code {
 .row {
   display: flex;
   cursor: pointer;
+  height: 40px;
+  align-items: center;
 }
 
 div {
@@ -76,20 +78,27 @@ button:hover {
   background-color: rgb(75, 183, 141);
 }
 
-input:focus {
-  border: 1px solid rgb(17, 100, 253);
-  border-radius: 5px;
-}
-input {
-  border-radius: 5px;
-}
 .form {
   display: flex;
   box-sizing: border-box;
 }
 
+input:focus {
+  border: none;
+  border-radius: none;
+}
+
 .input-form {
   margin-right: 1%;
+}
+
+.input-form:focus {
+  border: none;
+  outline: none;
+  border-width: 2px;
+  border-style: inset;
+  border-color: initial;
+  border-image: initial;
 }
 
 .form__item {
@@ -112,11 +121,60 @@ input {
   box-sizing: border-box;
 }
 
-.input {
+.input-open__reData {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid black;
+  display: inline-block;
+  position: relative;
+  padding: 4px 5px;
+  min-width: 30%;
+  max-width: 100%;
+  background-color: none;
+}
+.input-open__reData:active {
+  border-radius: none;
+  border: none;
+  border-bottom: 1px solid rgb(255, 0, 0);
+  box-sizing: border-box;
+}
+
+.input-open__reData:focus {
+  font-size: 16px;
+  border: none;
+  border-radius: none;
+  outline: none;
+  border-bottom: 1px solid rgb(255, 0, 0);
+  box-sizing: border-box;
+}
+
+.input-filter {
   display: inline-block;
   position: relative;
   padding: 4px 5px;
   min-width: 30%;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+.input-filter:active {
+  border: none;
+  border-radius: none;
+  outline: none;
+  border-width: 2px;
+  border-style: inset;
+  border-color: initial;
+  border-image: initial;
+}
+
+.input-filter:focus {
+  border: none;
+  border-radius: none;
+  outline: none;
+  border-width: 2px;
+  border-style: inset;
+  border-color: initial;
+  border-image: initial;
 }

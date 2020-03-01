@@ -143,7 +143,7 @@ export default class Table extends Component {
               Nazwa klienta
             </div>
             <input
-              className="input"
+              className="input-filter"
               type="text"
               placeholder="Filtryj klientov"
               value={this.state.termName}
@@ -160,7 +160,7 @@ export default class Table extends Component {
               Adres
             </div>
             <input
-              className="input"
+              className="input-filter"
               type="text"
               placeholder="Filtryj adresy"
               value={this.state.termAdres}

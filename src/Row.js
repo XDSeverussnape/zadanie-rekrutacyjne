@@ -17,7 +17,7 @@ function Row({ rowData, applyChangeName, applyChangeAdres }) {
       >
         {isEditingName ? (
           <input
-            className="input"
+            className="input-open__reData"
             value={rowData.name}
             onKeyDown={e => {
               if (e.keyCode === 13) {
@@ -40,7 +40,7 @@ function Row({ rowData, applyChangeName, applyChangeAdres }) {
       >
         {isEditingAdres ? (
           <input
-            className="input"
+            className="input-open__reData"
             value={rowData.address}
             onKeyDown={e => {
               if (e.keyCode === 13) {
