@@ -1,122 +1,29 @@
 import React, { Component } from "react";
 import Row from "./Row";
+import { connect } from "react-redux";
+import {
+  setClientName,
+  setAdres,
+  addNewCharacter,
+  setTermName,
+  setTermAdres,
+  sortBy
+} from "./action/action";
 
-export default class Table extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      adres: "",
-      clientName: "",
-      termName: "",
-      termAdres: "",
-      data: [
-        {
-          id: 1,
-          name: "Jan Kowalski",
-          address: "ul. Testowa 1, Pruszcz Gdanski"
-        },
-        {
-          id: 2,
-          name: "Andrzej Nowak",
-          address: "ul. Programistow 5 Gdansk"
-        },
-        { id: 3, name: "Piotr Piotrowski", address: "ul. Wiejska 1, Warszawa" }
-      ]
-    };
-
-    this.setName = e => {
-      this.setState({ clientName: e.target.value });
-    };
-
-    this.setAdres = e => {
-      this.setState({ adres: e.target.value });
-    };
-
-    this.setTermName = e => {
-      this.setState({ termName: e.target.value });
-    };
-
-    this.setTermAdres = e => {
-      this.setState({ termAdres: e.target.value });
-    };
-
-    this.addNewItem = () => {
-      const index = this.state.data.length + 1;
-      const newItem = {
-        id: index,
-        name: this.state.clientName,
-        address: this.state.adres
-      };
-      this.setState(({ data }) => {
-        const newArray = [...data, newItem];
-        return { data: newArray, adres: "", clientName: "" };
-      });
-    };
-
-    this.applyChangeName = (event, id) => {
-      this.setState(({ data }) => {
-        const newData = data.map(item => {
-          if (item.id === id) {
-            const regItem = {
-              id: id,
-              name: event,
-              address: item.address
-            };
-            return { ...regItem };
-          }
-          return item;
-        });
-        return { data: newData };
-      });
-    };
-
-    this.applyChangeAdres = (event, id) => {
-      this.setState(({ data }) => {
-        const newData = data.map(item => {
-          if (item.id === id) {
-            const regItem = {
-              id: id,
-              name: item.name,
-              address: event
-            };
-            return { ...regItem };
-          }
-          return item;
-        });
-        return { data: newData };
-      });
-    };
-
-    this.compareBy.bind(this);
-    this.sortBy.bind(this);
-  }
-
-  compareBy(key) {
-    return function(a, b) {
-      if (a[key] < b[key]) return -1;
-      if (a[key] > b[key]) return 1;
-      return 0;
-    };
-  }
-
-  sortBy(key) {
-    let arrayCopy = [...this.state.data];
-    arrayCopy.sort(this.compareBy(key));
-    this.setState({ data: arrayCopy });
-  }
-
+class Table extends Component {
   render() {
-    const filteredData = this.state.data.filter(data => {
+    console.log(this.props);
+    const filteredData = this.props.data.filter(data => {
       let state = true;
       if (
-        this.state.termName &&
-        !data.name.toLowerCase().includes(this.state.termName.toLowerCase())
+        this.props.termName &&
+        !data.name.toLowerCase().includes(this.props.termName.toLowerCase())
       ) {
         state = false;
       }
       if (
-        this.state.termAdres &&
-        !data.address.toLowerCase().includes(this.state.termAdres.toLowerCase())
+        this.props.termAdres &&
+        !data.address.toLowerCase().includes(this.props.termAdres.toLowerCase())
       ) {
         state = false;
       }
@@ -128,7 +35,7 @@ export default class Table extends Component {
           <div
             className="header-item"
             onClick={() => {
-              this.sortBy("id");
+              this.props.sortBy("id");
             }}
           >
             Id
@@ -137,7 +44,7 @@ export default class Table extends Component {
             <div
               className="header-item__block"
               onClick={() => {
-                this.sortBy("name");
+                this.props.sortBy("name");
               }}
             >
               Nazwa klienta
@@ -146,15 +53,17 @@ export default class Table extends Component {
               className="input-filter"
               type="text"
               placeholder="Filtryj klientov"
-              value={this.state.termName}
-              onChange={this.setTermName}
+              value={this.props.termName}
+              onChange={e => {
+                this.props.setTermName(e.target.value);
+              }}
             />
           </div>
           <div className="header-item">
             <div
               className="header-item__block"
               onClick={() => {
-                this.sortBy("address");
+                this.props.sortBy("address");
               }}
             >
               Adres
@@ -163,19 +72,16 @@ export default class Table extends Component {
               className="input-filter"
               type="text"
               placeholder="Filtryj adresy"
-              value={this.state.termAdres}
-              onChange={this.setTermAdres}
+              value={this.props.termAdres}
+              onChange={e => {
+                this.props.setTermAdres(e.target.value);
+              }}
             />
           </div>
         </div>
         <div className="body">
           {filteredData.map(rowData => (
-            <Row
-              key={rowData.id}
-              rowData={rowData}
-              applyChangeName={this.applyChangeName}
-              applyChangeAdres={this.applyChangeAdres}
-            />
+            <Row key={rowData.id} rowData={rowData} />
           ))}
         </div>
         <form
@@ -187,25 +93,31 @@ export default class Table extends Component {
           <input
             className="input-form form__item"
             type="text"
-            value={this.state.clientName}
+            value={this.props.clientName}
             placeholder="Nazwa klienta"
-            onChange={this.setName}
+            onChange={e => {
+              this.props.setClientName(e.target.value);
+            }}
           />
           <input
             className="input-form form__item"
             type="text"
-            value={this.state.adres}
+            value={this.props.adres}
             placeholder="Adres"
-            onChange={this.setAdres}
+            onChange={e => {
+              this.props.setAdres(e.target.value);
+            }}
           />
           <button
             className="button-form form__item"
             onClick={() => {
-              if (this.state.clientName === "" || this.state.adres === "") {
+              if (this.props.clientName === "" || this.props.adres === "") {
                 return null;
               } else {
-                this.addNewItem();
+                this.props.addNewCharacter();
               }
+              this.props.setAdres("");
+              this.props.setClientName("");
             }}
           >
             Dodanie nowego rekordu
@@ -215,3 +127,38 @@ export default class Table extends Component {
     );
   }
 }
+
+const mapStateToProps = store => {
+  return {
+    data: store.data,
+    adres: store.adres,
+    clientName: store.clientName,
+    termName: store.termName,
+    termAdres: store.termAdres
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setClientName: inputTextClientName => {
+      dispatch(setClientName(inputTextClientName));
+    },
+    setAdres: inputTextAdres => {
+      dispatch(setAdres(inputTextAdres));
+    },
+    addNewCharacter: () => {
+      dispatch(addNewCharacter());
+    },
+    setTermName: inputTextTermName => {
+      dispatch(setTermName(inputTextTermName));
+    },
+    setTermAdres: inputTextTermAdres => {
+      dispatch(setTermAdres(inputTextTermAdres));
+    },
+    sortBy: text => {
+      dispatch(sortBy(text));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

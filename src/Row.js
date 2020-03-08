@@ -1,10 +1,18 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState, Component } from "react";
+import { connect } from "react-redux";
+import {
+  applyChangeName,
+  applyChangeAdres,
+  setInputName,
+  setInputAdres
+} from "./action/action";
 
-function Row({ rowData, applyChangeName, applyChangeAdres }) {
-  console.log(rowData);
+function Row(props) {
+  const { rowData, applyChangeName, applyChangeAdres } = props;
   const [isEditingName, setEditingName] = useState(false);
   const [isEditingAdres, setEditingAdres] = useState(false);
+  const [valueName, setValueName] = useState(rowData.name);
+  const [valueAdres, setValueAdres] = useState(rowData.address);
 
   return (
     <div className="row">
@@ -18,14 +26,15 @@ function Row({ rowData, applyChangeName, applyChangeAdres }) {
         {isEditingName ? (
           <input
             className="input-open__reData"
-            value={rowData.name}
+            value={valueName}
             onKeyDown={e => {
               if (e.keyCode === 13) {
+                applyChangeName(valueName, rowData.id);
                 setEditingName(!isEditingName);
               }
             }}
             onChange={e => {
-              applyChangeName(e.target.value, rowData.id);
+              setValueName(e.target.value);
             }}
           />
         ) : (
@@ -41,14 +50,15 @@ function Row({ rowData, applyChangeName, applyChangeAdres }) {
         {isEditingAdres ? (
           <input
             className="input-open__reData"
-            value={rowData.address}
+            value={valueAdres}
             onKeyDown={e => {
               if (e.keyCode === 13) {
                 setEditingAdres(!isEditingAdres);
+                applyChangeAdres(e.target.value, rowData.id);
               }
             }}
             onChange={e => {
-              applyChangeAdres(e.target.value, rowData.id);
+              setValueAdres(e.target.value);
             }}
           />
         ) : (
@@ -59,14 +69,21 @@ function Row({ rowData, applyChangeName, applyChangeAdres }) {
   );
 }
 
-export default Row;
-
-Row.propTypes = {
-  rowData: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired
-  }).isRequired,
-  applyChangeName: PropTypes.func.isRequired,
-  applyChangeAdres: PropTypes.func.isRequired
+const mapDispatchToProps = dispatch => {
+  return {
+    applyChangeName: (inputText, id) => {
+      dispatch(applyChangeName(inputText, id));
+    },
+    applyChangeAdres: (inputText, id) => {
+      dispatch(applyChangeAdres(inputText, id));
+    },
+    setInputName: (inputText, id) => {
+      dispatch(setInputName(inputText, id));
+    },
+    setInputAdres: inputInputTermAdres => {
+      dispatch(setInputAdres(inputInputTermAdres));
+    }
+  };
 };
+
+export default connect(undefined, mapDispatchToProps)(Row);
