@@ -8,11 +8,16 @@ import {
   APPLY_CHANGE_NAME,
   APPLY_CHANGE_ADRES,
   SET_INPUT_NAME,
-  SET_INPUT_ADRES
+  SET_INPUT_ADRES,
+  SET_FILTERABLRED_DATA
 } from "../constants/constants";
 
 export const addNewCharacter = () => {
   return { type: ADD_NEW_CHARACTER };
+};
+
+export const setFilerabledData = array => {
+  return { type: SET_FILTERABLRED_DATA, payload: array };
 };
 
 export const setClientName = inputText => {

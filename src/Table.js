@@ -29,6 +29,7 @@ class Table extends Component {
       }
       return state;
     });
+    this.props.setFilerabledData(filteredData);
     return (
       <div className="table">
         <div className="header">
@@ -130,6 +131,7 @@ class Table extends Component {
 
 const mapStateToProps = store => {
   return {
+    filterablData: store.filterablData,
     data: store.data,
     adres: store.adres,
     clientName: store.clientName,
@@ -140,6 +142,9 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setFilerabledData: filteredData => {
+      dispatch(setFilerabledData(filteredData));
+    },
     setClientName: inputTextClientName => {
       dispatch(setClientName(inputTextClientName));
     },

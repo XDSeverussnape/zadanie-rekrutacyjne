@@ -8,7 +8,8 @@ import {
   APPLY_CHANGE_NAME,
   APPLY_CHANGE_ADRES,
   SET_INPUT_NAME,
-  SET_INPUT_ADRES
+  SET_INPUT_ADRES,
+  SET_FILTERABLRED_DATA
 } from "../constants/constants";
 
 const initialState = {
@@ -30,7 +31,8 @@ const initialState = {
       address: "ul. Programistow 5 Gdansk"
     },
     { id: 3, name: "Piotr Piotrowski", address: "ul. Wiejska 1, Warszawa" }
-  ]
+  ],
+  filterableData: []
 };
 
 const addNewCharacter = state => {
@@ -70,6 +72,8 @@ const updateListItem = ({ inputText, id }, key, state) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_FILTERABLRED_DATA:
+      return { ...state, filterableData: [...action.payload] };
     case ADD_NEW_CHARACTER:
       return { ...state, data: [...state.data, addNewCharacter(state)] };
     case SET_STATE_CLIENT_NAME:
